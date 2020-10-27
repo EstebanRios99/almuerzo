@@ -13,6 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-});
+});*/
+Route::get('payrolls', 'PayrollController@index');
+Route::get('payrolls/{payroll}', 'PayrollController@show');
+Route::post('payrolls', 'PayrollController@store');
+Route::put('payrolls/{payroll}', 'PayrollController@update');
+Route::delete('payrolls/{payroll}', 'PayrollController@delete');
+
+Route::get('registers', 'RegisterLunchController@index');
+Route::get('registers/{register}', 'RegisterLunchController@show');
+Route::post('registers', 'RegisterLunchController@store');
+Route::put('registers/{register}', 'RegisterLunchController@update');
+Route::delete('registers/{register}', 'RegisterLunchController@delete');
