@@ -15,8 +15,8 @@ class CreateRegisterLunchesTable extends Migration
     {
         Schema::create('register_lunches', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->time('CheckIn');
-            $table->time('CheckOut');
+            $table->time('checkIn');
+            $table->time('checkOut');
             $table->timestamps();
         });
     }

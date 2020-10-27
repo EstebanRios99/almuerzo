@@ -15,9 +15,13 @@ class CreatePayrollsTable extends Migration
     {
         Schema::create('payrolls', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('Identification')->unique();
+            $table->string('identification')->unique();
             $table->string('name');
             $table->string('lastname');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+            $table->unsignedBigInteger('register_id');
+            $table->foreign('register_id')->references('id')->on('register_lunches')->onDelete('restrict');
             $table->timestamps();
         });
     }
