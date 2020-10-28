@@ -1,6 +1,6 @@
 <?php
 
-use App\Payroll;
+use App\Employ;
 use Illuminate\Database\Seeder;
 
 
@@ -14,15 +14,15 @@ class PayrollsTableSeeder extends Seeder
     public function run()
     {
         // Vaciar la tabla
-        Payroll::truncate();
-        
+        Employ::truncate();
+
         $faker = \Faker\Factory::create();
-        
-       
+
+
         // Generar algunos empleados para nuestra aplicacion
-            
+
         for($i = 0; $i < 10; $i++) {
-            Payroll::create([
+            Employ::create([
                 'name'=> $faker->firstName,
                 'lastname'=>$faker->lastName,
                 'identification'=> $faker->isbn10,

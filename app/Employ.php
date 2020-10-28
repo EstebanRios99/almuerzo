@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RegisterLunch extends Model
+class Employ extends Model
 {
     protected $fillable = [
-        'CheckIn', 'CheckOut',
+        'name','lastname', 'identification',
     ];
 }
