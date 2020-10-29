@@ -1,6 +1,7 @@
 <?php
 
-use App\RegisterLunch;
+use App\Register;
+use App\Employ;
 use Illuminate\Database\Seeder;
 
 class RegistersTableSeeder extends Seeder
@@ -12,18 +13,20 @@ class RegistersTableSeeder extends Seeder
      */
     public function run()
     {
-        RegisterLunch::truncate();
+        Register::truncate();
         
         $faker = \Faker\Factory::create();
+        $employs = Employ::all();
         
        
-        // Generar algunos empleados para nuestra aplicacion
-            
-        for($i = 0; $i < 20; $i++) {
-            RegisterLunch::create([
-                'checkIn'=> $faker->time($format = 'H:i:s', $start='now', $max='-2 hours', $timezone = 'America/Guayaquil'),
-                'checkOut'=>$faker->time($format = 'H:i:s', $start='now',$max='+2 hours', $timezone = 'America/Guayaquil'),
+        // Generar registro para cada empleado
+        foreach ($employs as $employ){
+            for($i = 0; $i < 1; $i++) {
+                Register::create([
+                    'checkIn'=> $faker->time($format = 'H:i:s', $start='now', $max='-2 hours', $timezone = 'America/Guayaquil'),
+                    'checkOut'=>$faker->time($format = 'H:i:s', $start='now',$max='+2 hours', $timezone = 'America/Guayaquil'),
                 ]); 
             }
         }
+    }
 }
