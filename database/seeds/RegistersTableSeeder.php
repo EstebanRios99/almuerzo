@@ -17,14 +17,17 @@ class RegistersTableSeeder extends Seeder
         
         $faker = \Faker\Factory::create();
         $employs = Employ::all();
+        $checkIn = '13:05:00';
+        $checkOut = '13:55:00';
         
        
         // Generar registro para cada empleado
         foreach ($employs as $employ){
             for($i = 0; $i < 1; $i++) {
                 Register::create([
-                    'checkIn'=> $faker->time($format = 'H:i:s', $start='now', $max='-2 hours', $timezone = 'America/Guayaquil'),
-                    'checkOut'=>$faker->time($format = 'H:i:s', $start='now',$max='+2 hours', $timezone = 'America/Guayaquil'),
+                    'checkIn'=> $checkIn,
+                    'checkOut'=>$checkOut,
+                    'employ_id'=>$employ->id,
                 ]); 
             }
         }

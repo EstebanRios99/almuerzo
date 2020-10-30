@@ -12,18 +12,21 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+    
+Route::post('register', 'UserController@register');
+Route::post('login', 'UserController@authenticate');
 
-/*Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
-Route::get('payrolls', 'PayrollController@index');
-Route::get('payrolls/{payroll}', 'PayrollController@show');
-Route::post('payrolls', 'PayrollController@store');
-Route::put('payrolls/{payroll}', 'PayrollController@update');
-Route::delete('payrolls/{payroll}', 'PayrollController@delete');
+Route::group(['middleware' => ['jwt.verify']], function() {
+    
+    Route::get('employs', 'EmployController@index');
+    Route::get('employs/{employ}', 'EmployController@show');
+    Route::post('employs', 'EmployController@store');
+    Route::put('employs/{employ}', 'EmployController@update');
+    Route::delete('employs/{employ}', 'EmployController@delete');
 
-Route::get('registers', 'RegisterLunchController@index');
-Route::get('registers/{register}', 'RegisterLunchController@show');
-Route::post('registers', 'RegisterLunchController@store');
-Route::put('registers/{register}', 'RegisterLunchController@update');
-Route::delete('registers/{register}', 'RegisterLunchController@delete');
+    Route::get('registers', 'RegisterController@index');
+    Route::get('registers/{register}', 'RegisterController@show');
+    Route::post('registers', 'RegisterController@store');
+    Route::put('registers/{register}', 'RegisterController@update');
+    Route::delete('registers/{register}', 'RegisterController@delete');
+});

@@ -16,7 +16,7 @@ class CreateRegistersTable extends Migration
         Schema::create('registers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->time('checkIn');
-            $table->time('checkOut');
+            $table->time('checkOut')->nullable();
             $table->unsignedBigInteger('employ_id');
             $table->foreign('employ_id')->references('id')->on('employs')->onDelete('restrict');
             $table->timestamps();
