@@ -14,6 +14,14 @@ class Employ extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id'=>$this->id,
+            'identification'=>$this->identification,
+            'name'=>$this->name,
+            'lastname'=>$this->lastname,
+            'user'=>new User($this->user),
+            //'register'=>new Register($this->register),
+
+        ];
     }
 }

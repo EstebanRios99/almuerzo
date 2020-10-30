@@ -14,6 +14,13 @@ class Register extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id'=>$this->id,
+            'date'=>$this->created_at->format('d-m-Y'),
+            'checkIn'=>$this->checkIn,
+            'checkOut'=>$this->checkOut,
+            'employ'=>new Employ($this->employ),
+            
+        ];
     }
 }
