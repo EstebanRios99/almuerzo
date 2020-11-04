@@ -22,13 +22,20 @@ class EmployController extends Controller
 
     public function store(Request $request)
     {
-        $employ = Employ::create($request->all());
+        $request->validate([
+            'identification' => 'required',
+        ]);
+
+        $employ = Employ::create([
+            'identification' => $request->get('identification'),
+            ]);
 
         return response()->json(new EmployResource ($employ), 201);
     }
 
     public function update(Request $request, Employ $employ)
     {
+        
         $employ->update($request->all());
 
         return response()->json(new EmployResource($employ), 200);
