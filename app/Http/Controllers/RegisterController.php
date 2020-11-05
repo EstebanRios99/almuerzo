@@ -9,6 +9,11 @@ use App\Http\Resources\Register as RegisterResource;
 
 class RegisterController extends Controller
 {
+
+    private static $messages = [
+        'required' => 'El campo :attribute es obligatorio',
+    ];
+
     public function index()
     {
         return new RegisterCollection(Register::all());
@@ -21,7 +26,16 @@ class RegisterController extends Controller
     
     public function store(Request $request)
     {
-        $register = Register::create($request->all());
+        $request->validate([
+            'checkIn' => 'required',
+            'checkOut' => 'nullable',
+            'employ_id' => 'exists:employs,id'
+        ],self::$messages);
+        $register = Register::create([
+            'checkIn' => $request->get('checkIn'),
+            'checkOut' => $request->get('checkOut'),
+            'employ_id'=> $request->get('employ_id'),
+            ]);
         
         return response()->json(new RegisterResource($register), 201);
     }
