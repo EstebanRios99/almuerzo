@@ -16,16 +16,18 @@ use Illuminate\Http\Request;
 Route::post('register', 'UserController@register');
 Route::post('login', 'UserController@authenticate');
 
-Route::get('employs/{employ}/registers','EmployController@registersByEmploy');
+
 
 Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::get('employs', 'EmployController@index');
     Route::get('employs/{employ}', 'EmployController@show');
+    Route::get('search/employ/{identification}', 'EmployController@searchEmploy');
     Route::post('employs', 'EmployController@store');
     Route::put('employs/{employ}', 'EmployController@update');
     Route::delete('employs/{employ}', 'EmployController@delete');
 
+    Route::get('employs/{identification}/registers','EmployController@registersByEmploy');
     Route::get('registers', 'RegisterController@index');
     Route::get('registers/{register}', 'RegisterController@show');
     Route::post('registers', 'RegisterController@store');

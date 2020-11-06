@@ -28,6 +28,11 @@ class EmployController extends Controller
         return response()->json(new EmployResource($employ),200);
     }
 
+    public function searchEmploy($identification){
+        $employ= Employ::whereIdentification($identification)->first();
+        return response()->json(new EmployResource($employ),200);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -64,9 +69,11 @@ class EmployController extends Controller
         return response()->json(null, 204);
     }
 
-    public function registersByEmploy(Employ $employ)
+    public function registersByEmploy($identification)
     {
         //$employ=Employ::all();
+        //$registers=$employ->registers;
+        $employ= Employ::whereIdentification($identification)->first();
         $registers=$employ->registers;
         return response()->json(RegisterResource::collection($registers),200);
     }
