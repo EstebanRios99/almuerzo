@@ -11,13 +11,23 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
+    const ROLE_SUPERADMIN = 'ROLE_SUPERADMIN';
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_USER = 'ROLE_USER';
+
+    private const ROLES_HIERARCHY = [
+        self::ROLE_SUPERADMIN => [self::ROLE_ADMIN],
+        self::ROLE_ADMIN => [self::ROLE_USER],
+        self::ROLE_USER => []
+        ];
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name','lastname', 'email', 'password',
+        'name','lastname', 'email', 'password','role'
     ];
 
     /**
@@ -50,5 +60,27 @@ class User extends Authenticatable implements JWTSubject
     public function employs()
     {
         return $this->hasMany('App\Employ');    
+    }
+
+    public function isGranted($role)
+    {
+        if ($role === $this->role) {
+        return true;
+        }
+        return self::isRoleInHierarchy($role, self::ROLES_HIERARCHY[$this->role]);
+    }
+
+    private static function isRoleInHierarchy($role, $role_hierarchy)
+    {
+        if (in_array($role, $role_hierarchy)) {
+            return true;
+        }
+        foreach ($role_hierarchy as $role_included) {
+            if(self::isRoleInHierarchy($role,self::ROLES_HIERARCHY[$role_included]))
+            {
+            return true;
+            }
+        }
+        return false;
     }
 }

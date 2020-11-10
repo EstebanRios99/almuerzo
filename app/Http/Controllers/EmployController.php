@@ -20,7 +20,7 @@ class EmployController extends Controller
 
     public function index()
     {
-        return new EmployCollection(Employ::all());
+        return new EmployCollection(Employ::paginate(5));
     }
 
     public function show(Employ $employ)

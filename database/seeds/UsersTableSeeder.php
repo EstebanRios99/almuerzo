@@ -27,8 +27,15 @@ class UsersTableSeeder extends Seeder
             'lastname'=>'Almuerzo',
             'email'=> 'registro@prueba.com',
             'password'=> $password,
+            'role'=> 'ROLE_USER'
             ]);
-            
+        User::create([
+            'name'=> 'Esteban',
+            'lastname'=>'Rios',
+            'email'=> 'estebanrios@hotmail.com',
+            'password'=> $password,
+            'role'=> 'ROLE_SUPERADMIN'
+        ]);    
         // Generar algunos usuarios para nuestra aplicacion
             
         for($i = 0; $i < 2; $i++) {
@@ -37,6 +44,7 @@ class UsersTableSeeder extends Seeder
                 'lastname'=>$faker->lastName,
                 'email'=> $faker->email,
                 'password'=> $password,
+                'role'=> 'ROLE_ADMIN'
                 ]);
             }
    }
