@@ -20,21 +20,26 @@ class EmployController extends Controller
 
     public function index()
     {
+        $this->authorize('viewAny',Employ::class);
         return new EmployCollection(Employ::paginate(5));
     }
 
     public function show(Employ $employ)
     {
+        $this->authorize('view',$employ);
         return response()->json(new EmployResource($employ),200);
     }
 
     public function searchEmploy($identification){
         $employ= Employ::whereIdentification($identification)->first();
+        $this->authorize('search',$employ);
+        
         return response()->json(new EmployResource($employ),200);
     }
 
     public function store(Request $request)
     {
+        $this->authorize('create',Employ::class);
         $request->validate([
             'identification' => 'required|string|max:10|unique:employs',
             'name' => 'required|string|max:255',
@@ -52,6 +57,7 @@ class EmployController extends Controller
 
     public function update(Request $request, Employ $employ)
     {
+        $this->authorize('update',$employ);
         $request->validate([
             'name' => 'required|string|max:255',
             'lastname' => 'required|string|max:255'
@@ -64,6 +70,7 @@ class EmployController extends Controller
 
     public function delete(Employ $employ)
     {
+        $this->authorize('delete',$employ);
         $employ->delete();
 
         return response()->json(null, 204);
@@ -71,9 +78,8 @@ class EmployController extends Controller
 
     public function registersByEmploy($identification)
     {
-        //$employ=Employ::all();
-        //$registers=$employ->registers;
         $employ= Employ::whereIdentification($identification)->first();
+        $this->authorize('search',$employ);
         $registers=$employ->registers;
         return response()->json(RegisterResource::collection($registers),200);
     }

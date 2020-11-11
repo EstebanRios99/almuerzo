@@ -40,6 +40,11 @@ class EmployPolicy
         return $user->isGranted(User::ROLE_ADMIN);
     }
 
+    public function search(User $user, Employ $employ)
+    {
+        return $user->isGranted(User::ROLE_ADMIN);
+    }
+
     /**
      * Determine whether the user can create employs.
      *

@@ -16,16 +16,19 @@ class RegisterController extends Controller
 
     public function index()
     {
+        $this->authorize('viewAny',Register::class);
         return new RegisterCollection(Register::all());
     }
     
     public function show(Register $register)
     {
+        $this->authorize('view',$register);
         return response()->json(new RegisterResource($register),200);
     }
     
     public function store(Request $request)
     {
+        $this->authorize('create',Register::class);
         $request->validate([
             'checkIn' => 'required',
             'checkOut' => 'nullable',
@@ -42,6 +45,7 @@ class RegisterController extends Controller
     
     public function update(Request $request, Register $register)
     {
+        $this->authorize('update',$register);
         $register->update($request->all());
         
         return response()->json(new RegisterResource($register), 200);
@@ -49,6 +53,7 @@ class RegisterController extends Controller
     
     public function delete(Register $register)
     {
+        $this->authorize('delete',$register);
         $register->delete();
         
         return response()->json(null, 204);
