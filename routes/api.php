@@ -21,9 +21,9 @@ Route::group(['middleware' => ['cors']], function () {
 
     Route::group(['middleware' => ['jwt.verify']], function() {
 
-        Route::get('user', 'UserController@getAuthenticatedUser'); 
+        Route::get('user', 'UserController@getAuthenticatedUser');
         Route::post('logout', 'UserController@logout');
-        
+
         //employs
         Route::get('employs', 'EmployController@index');
         Route::get('employs/{employ}', 'EmployController@show');
