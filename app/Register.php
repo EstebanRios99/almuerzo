@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Register extends Model
 {
     protected $fillable = [
-        'checkIn','checkOut', 'employ_id',
+        'checkIn','checkOut',
     ];
 
     public function employ()

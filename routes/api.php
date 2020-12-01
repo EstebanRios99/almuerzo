@@ -27,17 +27,17 @@ Route::group(['middleware' => ['cors']], function () {
         //employs
         Route::get('employs', 'EmployController@index');
         Route::get('employs/{employ}', 'EmployController@show');
-        Route::get('search/employ/{identification}', 'EmployController@searchEmploy');
+        Route::get('employ/{identification}', 'EmployController@searchEmploy');
         Route::post('employs', 'EmployController@store');
         Route::put('employs/{employ}', 'EmployController@update');
         Route::delete('employs/{employ}', 'EmployController@delete');
 
         //registers
-        Route::get('employs/{identification}/registers','EmployController@registersByEmploy');
+        Route::get('employs/{identification}/registers','RegisterController@registersByEmploy');
         Route::get('registers', 'RegisterController@index');
         Route::get('registers/{register}', 'RegisterController@show');
-        Route::post('registers', 'RegisterController@store');
-        Route::put('registers/{register}', 'RegisterController@update');
+        Route::post('employ/{identification}/registers', 'RegisterController@store');
+        Route::put('employ/{identification}/registers/{register}', 'RegisterController@update');
         Route::delete('registers/{register}', 'RegisterController@delete');
     });
 });

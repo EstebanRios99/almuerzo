@@ -76,11 +76,5 @@ class EmployController extends Controller
         return response()->json(null, 204);
     }
 
-    public function registersByEmploy($identification)
-    {
-        $employ= Employ::whereIdentification($identification)->first();
-        $this->authorize('search',$employ);
-        $registers=$employ->registers;
-        return response()->json(RegisterResource::collection($registers),200);
-    }
+    
 }

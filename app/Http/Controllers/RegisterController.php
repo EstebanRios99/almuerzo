@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Register;
+use App\Employ;
 use App\Http\Resources\RegisterCollection;
 use App\Http\Resources\Register as RegisterResource;
 
@@ -25,28 +26,38 @@ class RegisterController extends Controller
         $this->authorize('view',$register);
         return response()->json(new RegisterResource($register),200);
     }
-    
-    public function store(Request $request)
+
+    public function registersByEmploy($identification)
     {
+        $employ= Employ::whereIdentification($identification)->first();
+        $this->authorize('search',$employ);
+        $registers=$employ->registers;
+        return response()->json(RegisterResource::collection($registers),200);
+    }
+    
+    public function store(Request $request, $identification)
+    {
+
         $this->authorize('create',Register::class);
         $request->validate([
             'checkIn' => 'required',
             'checkOut' => 'nullable',
-            'employ_id' => 'exists:employs,id'
         ],self::$messages);
-        $register = Register::create([
+        $employ= Employ::whereIdentification($identification)->first();
+        $register = $employ->registers()->save(new Register([
             'checkIn' => $request->get('checkIn'),
             'checkOut' => $request->get('checkOut'),
-            'employ_id'=> $request->get('employ_id'),
-            ]);
+            ]));
         
         return response()->json(new RegisterResource($register), 201);
     }
     
-    public function update(Request $request, Register $register)
+    public function update(Request $request, $identification, Register $register )
     {
         $this->authorize('update',$register);
-        $register->update($request->all());
+      
+        $employ= Employ::whereIdentification($identification)->first();
+        $employ->registers()->update($request->all());
         
         return response()->json(new RegisterResource($register), 200);
     }
