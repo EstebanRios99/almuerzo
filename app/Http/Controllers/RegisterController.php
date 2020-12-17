@@ -57,7 +57,7 @@ class RegisterController extends Controller
         $this->authorize('update',$register);
       
         $employ= Employ::whereIdentification($identification)->first();
-        $employ->registers()->update($request->all());
+        $register->update($request->all());
         
         return response()->json(new RegisterResource($register), 200);
     }
